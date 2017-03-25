@@ -6,6 +6,8 @@ import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -15,9 +17,16 @@ import static junit.framework.TestCase.assertTrue;
 public class KarumiHQsProperties {
 
     @Property
-    public void whenMaxibonsAreTakenByDevelopers_thereShouldBeAtLeastTwoLeft(@From(DevelopersGenerator.class) Developer developer) {
+    public void whenMaxibonsAreTakenByADeveloper_thereShouldBeAtLeastTwoLeft(@From(DevelopersGenerator.class) Developer developer) {
         KarumiHQs karumiHQs = new KarumiHQs();
         karumiHQs.openFridge(developer);
+        assertTrue(karumiHQs.getMaxibonsLeft() >= 2);
+    }
+
+    @Property
+    public void whenMaxibonsAreTakenByDevelopers_thereShouldBeAtLeastTwoLeft(List<@From(DevelopersGenerator.class) Developer> developers) {
+        KarumiHQs karumiHQs = new KarumiHQs();
+        karumiHQs.openFridge(developers);
         assertTrue(karumiHQs.getMaxibonsLeft() >= 2);
     }
 }
