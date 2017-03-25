@@ -17,14 +17,14 @@ import static junit.framework.TestCase.assertTrue;
 public class KarumiHQsProperties {
 
     @Property
-    public void whenMaxibonsTakenSingleDev_twoMaxLeft(@From(DevelopersGenerator.class) Developer developer) {
+    public void whenMaxibonsTakenSingleDevThanTwoMaxLeft(@From(DevelopersGenerator.class) Developer developer) {
         KarumiHQs karumiHQs = new KarumiHQs();
         karumiHQs.openFridge(developer);
         assertTrue(karumiHQs.getMaxibonsLeft() >= 2);
     }
 
     @Property
-    public void whenMaxibonsTakenMultiDevs_twoMaxLeft(List<@From(DevelopersGenerator.class) Developer> developers) {
+    public void whenMaxibonsTakenMultiDevsThanTwoMaxLeft(List<@From(DevelopersGenerator.class) Developer> developers) {
         KarumiHQs karumiHQs = new KarumiHQs();
         karumiHQs.openFridge(developers);
         assertTrue(karumiHQs.getMaxibonsLeft() >= 2);
