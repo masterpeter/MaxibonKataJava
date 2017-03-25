@@ -6,6 +6,8 @@ import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -18,6 +20,8 @@ import static org.mockito.Mockito.mock;
 @RunWith(JUnitQuickcheck.class)
 public class KarumiHQsProperties {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(KarumiHQsProperties.class);
+
     private KarumiHQs karumiHQs;
 
     @Before
@@ -29,12 +33,16 @@ public class KarumiHQsProperties {
     public void whenMaxibonsTakenSingleDevThanTwoMaxLeft(@From(DevelopersGenerator.class) Developer developer) {
         karumiHQs.openFridge(developer);
 
+        LOGGER.info(String.valueOf(karumiHQs.getMaxibonsLeft()));
+
         assertTrue(karumiHQs.getMaxibonsLeft() >= 2);
     }
 
     @Property
-    public void whenMaxibonsTakenMultiDevsThanTwoMaxLeft(List<@From(DevelopersGenerator.class) Developer> developers) {
+    public void whenMaxibonsTakenMultiDevsThanTwoMaxLeft(List<@From(KarumiesGenerator.class) Developer> developers) {
         karumiHQs.openFridge(developers);
+
+        LOGGER.info(String.valueOf(karumiHQs.getMaxibonsLeft()));
 
         assertTrue(karumiHQs.getMaxibonsLeft() >= 2);
     }
