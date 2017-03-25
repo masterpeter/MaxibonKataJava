@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Created by Angelo Mastropietro on 25/03/17.
@@ -23,10 +25,12 @@ public class KarumiHQsProperties {
     private static final Logger LOGGER = LoggerFactory.getLogger(KarumiHQsProperties.class);
 
     private KarumiHQs karumiHQs;
+    private Chat mockChat;
 
     @Before
     public void setUp() throws Exception {
-        karumiHQs = new KarumiHQs(mock(Chat.class));
+        mockChat = mock(Chat.class);
+        karumiHQs = new KarumiHQs(mockChat);
     }
 
     @Property
@@ -45,5 +49,12 @@ public class KarumiHQsProperties {
         LOGGER.info(String.valueOf(karumiHQs.getMaxibonsLeft()));
 
         assertTrue(karumiHQs.getMaxibonsLeft() >= 2);
+    }
+
+    @Property
+    public void whenMaxibonsAreFinishedThanSendMessage(@From(DevelopersGenerator.class) Developer developer) {
+        karumiHQs.openFridge(developer);
+
+        verify(mockChat).sendMessage(anyString());
     }
 }
